@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<title>SimpleTravel</title>
+<!-- 
+    Lyndon's Travel Booking Website
+    Filename: Website.html
+    Author: Lyndon Wright
+    Date: 2/11/2025
+    -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<main>
+<header>
+    <nav>
+        <button onclick="navbar">Destination</button>
+        <button onclick="navbar">About Me</button>
+        <button onclick="navbar">Locations</button>
+        <button onclick="navbar">Price Range</button>
+        <button onclick="navbar">Date</button>
+    </nav>
+</header>
+</main>
+</body>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFmypTIC8iFzFALweUDojvMA_Slp_VJNY",
+      authDomain: "my-website-19cbb.firebaseapp.com",
+      projectId: "my-website-19cbb",
+      storageBucket: "my-website-19cbb.firebasestorage.app",
+      messagingSenderId: "460833659303",
+      appId: "1:460833659303:web:991f507637b1b902b47e82"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+  </script>
