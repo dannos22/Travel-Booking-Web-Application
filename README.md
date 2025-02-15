@@ -1,6 +1,6 @@
 # Travel-Booking-Web-Application
 
-My project is a full-stack web application designed to provide an easy and simple user experience with authentication, database management, and a dynamic frontend.
+My project, SimpleTravels, is a full-stack web application designed to provide an easy and simple user experience with authentication, database management, and a dynamic frontend.
 
 Frontend: Built using HTML, CSS, and JavaScript for a responsive and interactive UI. 
 Backend: Powered by Node.js with Express.js, handling API requests and business logic. 
