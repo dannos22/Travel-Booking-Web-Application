@@ -8,3 +8,6 @@ Database: Uses MySQL for structured data storage and Supabase for real-time upda
 Authentication: Implements Firebase Auth for secure user login and registration.
 
 I am aiming to create a user-friendly web application.
+
+To Milestone 1 video
+https://mediaspace.wisconsin.edu/media/Milestone+1+-+Lyndon+Wright/1_578sm1uh
