@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>SimpleTravels</title>
+    <!-- 
+    Lyndon's Travel Booking Website
+    Filename: Website.html
+    Author: Lyndon Wright
+    Date: 2/16/2025
+    -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="css/website_styles.css">
+    <script type="module" src="login.js" defer></script>
+    <script src="website.js" defer></script>
+
+</head>
+
+<body>
+    <main>
+        <header>
+            <nav>
+                <button onclick="location.href='destinations.html'">Destination</button>
+                <button onclick="location.href='about.html'">About Me</button>
+                <button onclick="location.href='login.html'">Login</button>
+                <button onclick="location.href='register.html'">Register</button>
+                <!-- <input type="email" placeholder="Email of Phone" id="email" required> -->
+                <!-- <input type="password" placeholder="Password" id="password" required> -->
+            </nav>
+            <form id="searchForm">
+                <input type="text" class="search-box" placeholder="Location" id="locationInput" required>
+                <input type="text" class="search-box" placeholder="Budget" id="budgetInput" required>
+                <input type="text" class="search-box" placeholder="Date" id="dateInput" required>
+                <br><br>
+                <button type="submit">Search</button>
+            </form>
+
+        </header>
+    </main>
+</body>
+
+</html>

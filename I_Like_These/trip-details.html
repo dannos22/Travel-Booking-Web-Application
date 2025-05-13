@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trip Details</title>
+  <link rel="stylesheet" href="trip-details.css">
+  <script type="module" src="firebase-init.js"></script>
+</head>
+<body>
+  <h2 id="trip-name">Trip Details</h2>
+  <p id="trip-description">Description: </p>
+  <p id="trip-price">Price: </p>
+  <p id="trip-location">Location: </p>
+  <p id="trip-date">Date: </p>
+
+  <!-- Book Now Button -->
+  <button id="book-now-btn">Book Now</button>
+
+  <script type="module">
+    import { auth, db } from './firebase-init.js';
+    import { getDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getIdToken } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    const tripId = new URLSearchParams(window.location.search).get("id");
+    const tripRef = doc(db, "destinations", tripId);
+    const tripDetails = document.getElementById("trip-name");
+
+    async function loadTripDetails() {
+      const tripDoc = await getDoc(tripRef);
+      if (tripDoc.exists()) {
+        const trip = tripDoc.data();
+        document.getElementById("trip-name").innerText = trip.name;
+        document.getElementById("trip-description").innerText = `Description: ${trip.description}`;
+        document.getElementById("trip-price").innerText = `Price: $${trip.price}`;
+        document.getElementById("trip-location").innerText = `Location: ${trip.location}`;
+        document.getElementById("trip-date").innerText = `Date: ${trip.date}`;
+      } else {
+        alert("Trip not found!");
+      }
+    }
+
+    loadTripDetails();
+
+    document.getElementById("book-now-btn").addEventListener("click", async () => {
+      const user = auth.currentUser;
+      if (user) {
+        const token = await getIdToken(user);
+        fetch('/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            tripId,
+            userId: user.uid
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert("Booking successful!");
+            window.location.href = "dashboard.html";
+          } else {
+            alert("Booking failed: " + data.message);
+          }
+        })
+        .catch(error => alert("Error: " + error.message));
+      } else {
+        alert("Please log in to book a trip.");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Add Destination</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script type="module" src="firebase-init.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f3f3f3;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .logout {
+      display: block;
+      margin: 20px auto 0;
+      padding: 8px 16px;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .logout:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Add New Destination</h1>
+  <form id="destination-form">
+    <input type="text" id="location" placeholder="Location" required />
+    <textarea id="description" placeholder="Description" required></textarea>
+    <input type="date" id="date" required />
+    <input type="number" id="price" placeholder="Price (USD)" required />
+    <input type="number" id="rating" placeholder="Rating (1–5)" min="1" max="5" required />
+    <input type="url" id="imageURL" placeholder="Image URL" required />
+    <input type="text" id="tags" placeholder="Tags (comma separated)" />
+    <button type="submit">Add Destination</button>
+  </form>
+
+  <button class="logout" id="logout-btn">Logout</button>
+
+  <script type="module">
+    import { auth, db } from './firebase-init.js';
+    import {
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    import {
+      collection,
+      addDoc
+    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const form = document.getElementById("destination-form");
+
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        alert("You must be logged in to access the admin page.");
+        window.location.href = "login.html";
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const location = document.getElementById("location").value;
+      const description = document.getElementById("description").value;
+      const date = document.getElementById("date").value;
+      const price = parseFloat(document.getElementById("price").value);
+      const rating = parseInt(document.getElementById("rating").value);
+      const imageURL = document.getElementById("imageURL").value;
+      const tags = document.getElementById("tags").value.split(",").map(tag => tag.trim());
+
+      try {
+        await addDoc(collection(db, "destinations"), {
+          location,
+          description,
+          date,
+          price,
+          rating,
+          imageURL,
+          tags
+        });
+
+        alert("Destination added successfully!");
+        form.reset();
+      } catch (err) {
+        console.error("Error adding destination: ", err);
+        alert("Error adding destination. See console for details.");
+      }
+    });
+
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      await signOut(auth);
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

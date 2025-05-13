@@ -1,0 +1,46 @@
+<body>
+  <h1>Trips</h1>
+  <div class="container" id="trips-container">
+    <!-- Cards will be filled here dynamically -->
+  </div>
+
+  <script type="module">
+    import { db } from './firebase-init.js';
+    import { collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const tripsContainer = document.getElementById("trips-container");
+
+    async function loadTrips() {
+      try {
+        const snapshot = await getDocs(collection(db, "destinations"));
+        snapshot.forEach(doc => {
+          const trip = doc.data();
+          const tripId = doc.id;
+
+          // Create a card div
+          const card = document.createElement("div");
+          card.className = "card";
+
+          // Fill the card with trip data
+          card.innerHTML = `
+            <img src="${trip.imageURL || 'https://via.placeholder.com/280x180'}" alt="Trip Image">
+            <div class="card-content">
+              <h3>Location: ${trip.location || 'Unknown'}</h3>
+              <p>Description: ${trip.description || 'No description available.'}</p>
+              <p>Price: $${trip.price || 'N/A'}</p>
+              <p>Date: ${trip.date || 'N/A'}</p>
+              <button onclick="window.location.href='destination.html?id=${tripId}'">View Details</button>
+            </div>
+          `;
+
+          // Add card to the container
+          tripsContainer.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error loading trips:", error);
+      }
+    }
+
+    loadTrips();
+  </script>
+</body>

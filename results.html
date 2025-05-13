@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+  <link rel="stylesheet" href="results.css">
+  <script type="module" src="firebase-init.js"></script>
+</head>
+<body>
+  <div class="header">
+    <h1>Search Results</h1>
+    <button id="back-btn">Back to Dashboard</button>
+  </div>
+
+  <div class="trip-list" id="trip-list">
+    <!-- Search results will be populated here -->
+  </div>
+
+  <script type="module">
+    import { db } from './firebase-init.js';
+    import { collection, query, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const tripList = document.getElementById('trip-list');
+
+    // Example: Search trips by tag (e.g. ?tag=beach)
+    const tag = new URLSearchParams(window.location.search).get("tag");
+
+    async function loadSearchResults() {
+      const q = query(collection(db, "destinations"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const trip = doc.data();
+        if (!tag || trip.tags.includes(tag)) {
+          const tripDiv = document.createElement('div');
+          tripDiv.className = 'trip';
+
+          tripDiv.innerHTML = `
+            <h3>${trip.name}</h3>
+            <p><strong>Location:</strong> ${trip.location}</p>
+            <p><strong>Price:</strong> $${trip.price}</p>
+            <button onclick="viewDetails('${doc.id}')">View Details</button>
+          `;
+
+          tripList.appendChild(tripDiv);
+        }
+      });
+    }
+
+    window.viewDetails = function(id) {
+      window.location.href = `trip-details.html?id=${id}`;
+    };
+
+    document.getElementById("back-btn").addEventListener("click", () => {
+      window.location.href = "dashboard.html";
+    });
+
+    loadSearchResults();
+  </script>
+</body>
+</html>

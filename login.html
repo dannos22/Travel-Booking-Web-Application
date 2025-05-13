@@ -1,45 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SimpleTravel</title>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Sign Up</title>
+  <link rel="stylesheet" href="css/login_styles.css" />
+  <script type="module" src="firebase-init.js"></script>
 </head>
 <body>
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
-    <button onclick="login()">Login</button>
-    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+  <div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
 
-    <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-        firebase.initializeApp(firebaseConfig);
+  <form>
+    <h3>Login</h3>
+    <label for="login-email">Email</label>
+    <input type="email" placeholder="Email" id="login-email">
 
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+    <label for="login-password">Password</label>
+    <input type="password" placeholder="Password" id="login-password">
 
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    return userCredential.user.getIdToken();
-                })
-                .then((token) => {
-                    localStorage.setItem("authToken", token);
-                    alert("Login successful! Redirecting...");
-                    window.location.href = "dashboard.html"; // Redirect after login
-                })
-                .catch(error => alert(error.message));
-        }
-    </script>
+    <button type="button" id="login-btn">Login</button>
+
+    <p>Don't have an account? <a href="register.html">Create one here</a></p>
+  </form>
+
+  <script type="module">
+    import { auth } from './firebase-init.js';
+    import {
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+    document.getElementById("signup-btn").addEventListener("click", async () => {
+      const email = document.getElementById("signup-email").value;
+      const password = document.getElementById("signup-password").value;
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert("Signup successful!");
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Signup error: " + error.message);
+      }
+    });
+
+    document.getElementById("login-btn").addEventListener("click", async () => {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } catch (error) {
+        alert("Login error: " + error.message);
+      }
+    });
+  </script>
 </body>
 </html>

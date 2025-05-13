@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2b096a;
+    margin: 0;
+    min-height: 200vh;
+    
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("images/boat-4899802_1280.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.6;
+    z-index: -1;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+button {
+    background: linear-gradient(to left, #2b096a, #ff8800ce);
+    color: white;
+    border: 2px solid rgb(135, 8, 135);
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background: #ff8800;
+    color: black;
+}
+
+.search-box {
+    display: inline-block;
+    background: linear-gradient(to left, #2b096a, #ff8800);
+    color: black;
+    padding: 12px;
+    border-radius: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 10px 0;
+}
+
+.search-box::placeholder {
+    color: rgb(62, 62, 62);
+    opacity: 80%;
+}
+
+.search-container {
+    text-align: center;
+    margin-top: 40px;
+}

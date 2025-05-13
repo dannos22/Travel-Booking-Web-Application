@@ -7,45 +7,36 @@
     Lyndon's Travel Booking Website
     Filename: Website.html
     Author: Lyndon Wright
-    Date: 2/11/2025
+    Date: 2/16/2025
     -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="website_styles.css">
+    <link rel="stylesheet" href="css/website_styles.css">
+    <script type="module" src="login.js" defer></script>
+    <script src="website.js" defer></script>
+
 </head>
 
 <body>
     <main>
         <header>
             <nav>
-                <button onclick="navbar">Destination</button>
-                <button onclick="navbar">About Me</button>
+                <button onclick="location.href='destinations.html'">Destination</button>
+                <button onclick="location.href='login.html'">Login</button>
+                <button onclick="location.href='register.html'">Register</button>
+                <!-- <input type="email" placeholder="Email of Phone" id="email" required> -->
+                <!-- <input type="password" placeholder="Password" id="password" required> -->
             </nav>
-            <div>
-                <input type="text" class="search-box" placeholder="Location">
-                <input type="text" class="search-box" placeholder="Budget">
-                <input type="text" class="search-box" placeholder="Date">
-            </div>
+            <form id="searchForm">
+                <input type="text" class="search-box" placeholder="Location" id="locationInput" required>
+                <input type="text" class="search-box" placeholder="Budget" id="budgetInput" required>
+                <input type="text" class="search-box" placeholder="Date" id="dateInput" required>
+                <br><br>
+                <button type="submit">Search</button>
+            </form>
+
         </header>
     </main>
 </body>
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDFmypTIC8iFzFALweUDojvMA_Slp_VJNY",
-        authDomain: "my-website-19cbb.firebaseapp.com",
-        projectId: "my-website-19cbb",
-        storageBucket: "my-website-19cbb.firebasestorage.app",
-        messagingSenderId: "460833659303",
-        appId: "1:460833659303:web:991f507637b1b902b47e82"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-</script>
+</html>
